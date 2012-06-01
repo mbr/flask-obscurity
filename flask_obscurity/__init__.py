@@ -41,39 +41,39 @@ EMAIL_REGEX = re.compile(
 def obscure(address, keylength=None):
     if not keylength:
         keylength = current_app.config['OBSCURE_KEY_LENGTH']
-    k = [ord(c) for c in key]
+    k = [ord(c) for c in os.urandom(keylength)]
 
     positions = range(len(address))
     random.shuffle(positions)
 
     # format: key length, key bytes, [pos, byte]
-    rv = [len(k)]
+    rv = [keylength]
     rv.extend(k)
     for pos in positions:
         rv.append(pos)
         rv.append((ord(address[pos])+k[pos%len(k)])%256)
-        k[pos%len(key)]
+        k[pos%keylength]
 
     return ','.join(str(n) for n in rv)
 
 
-def pmailto(address, key=None):
+def pmailto(address):
     return Markup(
         u'<a class="oe-link" data-oe="%s">(hidden email address)</a>' %\
-           escape(obscure(address, key))
+           escape(obscure(address))
     )
 
 
-def pspan(address, key=None):
+def pspan(address):
     return Markup(
         u'<span class="oe-span" data-oe="%s">(hidden email address)</a>' %\
-           escape(obscure(address, key))
+           escape(obscure(address))
     )
 
 
-def pmailto_all(text, key=None):
+def pmailto_all(text):
     return EMAIL_REGEX.sub(lambda m: pmailto(m.group(0)), text)
 
 
-def pspan_all(text, key=None):
+def pspan_all(text):
     return EMAIL_REGEX.sub(lambda m: pspan(m.group(0)), text)
