@@ -59,14 +59,14 @@ def obscure(address, keylength=None):
 
 def pmailto(address):
     return Markup(
-        u'<a class="oe-link" data-oe="%s">(hidden email address)</a>' %\
+        u'<a class="oe-link" data-oe="%s">(hidden)</a>' %\
            escape(obscure(address))
     )
 
 
 def pspan(address):
     return Markup(
-        u'<span class="oe-span" data-oe="%s">(hidden email address)</a>' %\
+        u'<span class="oe-text" data-oe="%s">(hidden)</span>' %\
            escape(obscure(address))
     )
 

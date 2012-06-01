@@ -19,7 +19,7 @@ $(document).ready(function () {
     }
   });
 
-  $("span.oe-span").each(function () {
+  $("span.oe-text").each(function () {
     if ($(this).attr("data-oe")) {
       var a = uoe($(this).attr("data-oe"));
       $(this).removeAttr("data-oe")
