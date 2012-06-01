@@ -14,7 +14,6 @@ $(document).ready(function () {
     if ($(this).attr("data-oe")) {
       var a = uoe($(this).attr("data-oe"));
       $(this).removeAttr("data-oe")
-             .removeClass("oe-link")
              .attr("href", "mailto:" + a)
              .text(a);
     }
@@ -24,7 +23,6 @@ $(document).ready(function () {
     if ($(this).attr("data-oe")) {
       var a = uoe($(this).attr("data-oe"));
       $(this).removeAttr("data-oe")
-             .removeClass("oe-span")
              .text(a);
     }
   });
