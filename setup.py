@@ -8,7 +8,7 @@ def read(fname):
 
 
 setup(
-    name='Flask-Bootstrap',
+    name='Flask-Obscurity',
     version='0.2',
     url='http://github.com/mbr/flask-obscurity',
     license='BSD',
