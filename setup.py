@@ -12,7 +12,7 @@ setup(
     version='0.2',
     url='http://github.com/mbr/flask-obscurity',
     license='BSD',
-    author='Marc Brinkmann.de',
+    author='Marc Brinkmann',
     author_email='git@marcbrinkmann.de',
     description='Security-by-obscurity. Move along, nothing to see here.',
     long_description=read('README.rst'),
