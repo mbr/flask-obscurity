@@ -52,7 +52,6 @@ def obscure(address, keylength=None):
     for pos in positions:
         rv.append(pos)
         rv.append((ord(address[pos]) + k[pos % len(k)]) % 256)
-        k[pos % keylength]
 
     return ','.join(str(n) for n in rv)
 
