@@ -33,8 +33,8 @@ class Obscurity(object):
 
 
 EMAIL_REGEX = re.compile(
-   "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z"\
-   "0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+    "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z"
+    "0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
 )
 
 
@@ -51,23 +51,23 @@ def obscure(address, keylength=None):
     rv.extend(k)
     for pos in positions:
         rv.append(pos)
-        rv.append((ord(address[pos])+k[pos%len(k)])%256)
-        k[pos%keylength]
+        rv.append((ord(address[pos]) + k[pos % len(k)]) % 256)
+        k[pos % keylength]
 
     return ','.join(str(n) for n in rv)
 
 
 def pmailto(address):
     return Markup(
-        u'<a class="oe-link" data-oe="%s">(hidden)</a>' %\
-           escape(obscure(address))
+        u'<a class="oe-link" data-oe="%s">(hidden)</a>' %
+        escape(obscure(address))
     )
 
 
 def pspan(address):
     return Markup(
-        u'<span class="oe-text" data-oe="%s">(hidden)</span>' %\
-           escape(obscure(address))
+        u'<span class="oe-text" data-oe="%s">(hidden)</span>' %
+        escape(obscure(address))
     )
 
 
