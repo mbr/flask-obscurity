@@ -5,8 +5,9 @@ import random
 import os
 import re
 
-from jinja2 import Markup, escape
 from flask import Blueprint, current_app
+from jinja2 import Markup, escape
+from six import b, byte2int, iterbytes, indexbytes
 
 
 class Obscurity(object):
@@ -41,9 +42,10 @@ EMAIL_REGEX = re.compile(
 def obscure(address, keylength=None):
     if not keylength:
         keylength = current_app.config['OBSCURE_KEY_LENGTH']
-    k = [ord(c) for c in os.urandom(keylength)]
+    k = list(iterbytes(os.urandom(keylength)))
 
-    positions = range(len(address))
+    positions = list(range(len(address)))
+    address = b(address)
     random.shuffle(positions)
 
     # format: key length, key bytes, [pos, byte]
@@ -51,7 +53,8 @@ def obscure(address, keylength=None):
     rv.extend(k)
     for pos in positions:
         rv.append(pos)
-        rv.append((ord(address[pos]) + k[pos % len(k)]) % 256)
+        ciph = (indexbytes(address, pos) + k[pos % len(k)]) % 256
+        rv.append(ciph)
 
     return ','.join(str(n) for n in rv)
 
