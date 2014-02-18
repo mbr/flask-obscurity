@@ -6,14 +6,18 @@ from six import unichr
 import pytest
 
 
-@pytest.fixture
-def inp():
-    return 'foo@bar.invalid'
+@pytest.fixture(params=['foo@bar.invalid',
+                        'bob@example.org',
+                        'something+weird@x.invalid',
+                        'foo.bar.baz@bla',
+                        'REALLysTrang@ecApitaliZatIon.invaliD'])
+def inp(request):
+    return request.param
 
 
-@pytest.fixture
-def keylen():
-    return 5
+@pytest.fixture(params=[1, 3, 5, 7, 9, 16, 24, 32])
+def keylen(request):
+    return request.param
 
 
 def _r(s):
