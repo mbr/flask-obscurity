@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name='Flask-Obscurity',
-    version='0.2',
+    version='0.3.dev1',
     url='http://github.com/mbr/flask-obscurity',
     license='BSD',
     author='Marc Brinkmann',
