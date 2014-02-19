@@ -10,6 +10,7 @@ tpl = {
     'singlenolink.html': """test inside {{addr|pspan}} all""",
     'par.html': """{{('hello ' + addr + ' world')|pmailto_all}}""",
     'parnolink.html': """{{('hello ' + addr + ' world')|pspan_all}}""",
+    'header.html': """{{obscurity_js()}}"""
 }
 
 
@@ -27,6 +28,12 @@ def app():
     return app
 
 
+@pytest.fixture
+def client(app):
+    app.testing = True
+    return app.test_client()
+
+
 @pytest.fixture(params=['foo@bar.invalid', 'test@asdf.com',
                         'stramge@foo.bar.de', 'foo.bar.baz@12.12.12.12'])
 def addr(request):
@@ -39,6 +46,17 @@ def template(request):
 
 
 def test_basics(app, addr, template):
-    with app.app_context():
+    with app.test_request_context():
         buf = render_template(template, addr=addr)
         assert addr not in buf
+
+
+def test_js(client):
+    rv = client.get('/static/oe/js/uoe.js')
+    assert rv.status_code == 200
+
+
+def test_js_include(app):
+    with app.test_request_context():
+        buf = render_template('header.html')
+        assert '/static/oe/js/uoe.js' in buf

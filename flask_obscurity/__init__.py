@@ -5,7 +5,7 @@ import random
 import os
 import re
 
-from flask import Blueprint, current_app
+from flask import Blueprint, current_app, url_for
 from jinja2 import Markup, escape
 from six import b, iterbytes, indexbytes
 
@@ -31,6 +31,11 @@ class Obscurity(object):
         app.jinja_env.filters['pspan'] = pspan
         app.jinja_env.filters['pmailto_all'] = pmailto_all
         app.jinja_env.filters['pspan_all'] = pspan_all
+
+        app.jinja_env.globals['obscurity_js'] = lambda: Markup(
+            """<script src="{}"></script>""".format(url_for(
+                'obscurity.static', filename='js/uoe.js', _external=True,
+            )))
 
 
 EMAIL_REGEX = re.compile(
