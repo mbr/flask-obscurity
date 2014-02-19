@@ -7,7 +7,7 @@ import re
 
 from flask import Blueprint, current_app
 from jinja2 import Markup, escape
-from six import b, byte2int, iterbytes, indexbytes
+from six import b, iterbytes, indexbytes
 
 
 class Obscurity(object):
