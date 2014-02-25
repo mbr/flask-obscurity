@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_obscurity import Obscurity
+from flask_obscurity import Obscurity, pmailto_all
 from jinja2 import FunctionLoader
 
 import pytest
@@ -60,3 +60,15 @@ def test_js_include(app):
     with app.test_request_context():
         buf = render_template('header.html')
         assert '/static/oe/js/uoe.js' in buf
+
+
+def test_mailto_replaces_properly_simple(addr, app):
+    with app.app_context():
+        text = 'some text ' + addr + ' more'
+        assert addr not in pmailto_all(text)
+
+
+def test_mailto_replaces_propery_end_of_sentence(addr, app):
+    with app.app_context():
+        text = 'long sentence with stuff ' + addr + '.'
+        assert addr not in pmailto_all(text)
