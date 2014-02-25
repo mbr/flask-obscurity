@@ -64,11 +64,17 @@ def obscure(address, keylength=None):
     return ','.join(str(n) for n in rv)
 
 
-def pmailto(address):
-    return Markup(
-        u'<a class="oe-link" data-oe="%s">(hidden)</a>' %
-        escape(obscure(address))
-    )
+def pmailto(address, linkcontent=None):
+    if not linkcontent:
+        return Markup(
+            u'<a class="oe-link" data-oe="{}">(hidden)</a>'.format(
+            escape(obscure(address))
+            ))
+    else:
+        return Markup(
+            u'<a class="oe-link" data-oe="{}" data-keep="1">{}</a>'.format(
+                escape(obscure(address)), linkcontent
+            ))
 
 
 def pspan(address):

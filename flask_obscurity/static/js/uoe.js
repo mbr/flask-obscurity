@@ -14,8 +14,10 @@ $(document).ready(function () {
     if ($(this).attr("data-oe")) {
       var a = uoe($(this).attr("data-oe"));
       $(this).removeAttr("data-oe")
-             .attr("href", "mailto:" + a)
-             .text(a);
+             .attr("href", "mailto:" + a);
+      if ($(this).attr("data-keep") != "1") {
+        $(this).text(a);
+      }
     }
   });
 
