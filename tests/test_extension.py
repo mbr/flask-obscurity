@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_obscurity import Obscurity, pmailto_all
+from flask_obscurity import Obscurity, pmailto_all, pmailto, pspan
 from jinja2 import FunctionLoader
 
 import pytest
@@ -43,6 +43,16 @@ def addr(request):
 @pytest.fixture(params=tpl.keys())
 def template(request):
     return request.param
+
+
+def test_pmailto_works(addr, app):
+    with app.app_context():
+        pmailto(addr)
+
+
+def test_pspan_works(addr, app):
+    with app.app_context():
+        pspan(addr)
 
 
 def test_basics(app, addr, template):
