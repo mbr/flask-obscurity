@@ -73,9 +73,9 @@ def pmailto(address):
 
 def pspan(address):
     return Markup(
-        u'<span class="oe-text" data-oe="%s">(hidden)</span>' %
-        escape(obscure(address))
-    )
+        u'<span class="oe-text" data-oe="%s">(hidden)</span>'.format(
+            escape(obscure(address))
+        ))
 
 
 def pmailto_all(text):
